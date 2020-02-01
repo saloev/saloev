@@ -1,5 +1,7 @@
 <template>
-  <div class="home height-min--100vh">
+  <div
+    class="home height-min--100vh display--flex flex-justify--center flex-align--center"
+  >
     <intro></intro>
   </div>
 </template>
