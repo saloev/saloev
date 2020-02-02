@@ -1,0 +1,9 @@
+.color {
+  &--primary {
+    color: var(--color-gold);
+  }
+
+  &--white {
+    color: var(--color-white);
+  }
+}

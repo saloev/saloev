@@ -1,0 +1,13 @@
+.text {
+  &-align {
+    &--center {
+      text-align: center;
+    }
+  }
+
+  &-shadow {
+    &--neon-gold {
+      text-shadow: var(--neon-yellow-text-shadow);
+    }
+  }
+}

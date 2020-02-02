@@ -1,11 +1,23 @@
 //path
 $assets: "~@/assets";
 
-//font
-$default-font: "Quantico", sans-serif;
+:root {
+  --color-seance: #711c91;
+  --color-hot-magenta: #ea00d9;
+  --color-iris-blue: #0abdc6;
+  --color-dark-cerulean: #133e7c;
+  --color-cyprus: #091833;
+  --color-gold: #ffd200;
+  --color-white: #fff;
 
-//colors
-$primary: #ffd200;
-$white: #fff;
+  --neon-yellow-text-shadow: 0 0 5px #c1ce13, 0 0 5px #c1ce13, 0 0 60px #f1ed0d,
+    0 0 100px #f1ed0d, 0 0 100px #f1ed0d;
+  --neon-sky-blue-text-shadow: 0 0 5px #378f99, 0 0 5px #378f99,
+    0 0 60px #45e4fc, 0 0 100px #45e4fc, 0 0 100px #45e4fc;
+  --neon-purple-text-shadow: 0 0 5px #fc4596, 0 0 5px #fc4596, 0 0 60px #f505c5,
+    0 0 100px #f505c5, 0 0 100px #f505c5;
+
+  --default-font: "Quantico", sans-serif;
+}
 
 @import "mixins";

@@ -1,0 +1,13 @@
+.animation {
+  &--blink {
+    animation: blink 0.8s linear 2s infinite alternate;
+  }
+
+  &--scroll-down {
+    animation: scroll-down 1.5s infinite;
+  }
+
+  &--rainbow-border-color {
+    animation: border-rainbow 3s linear 2s infinite;
+  }
+}

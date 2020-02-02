@@ -1,18 +1,26 @@
 <template>
   <div
-    class="home height-min--100vh display--flex flex-justify--center flex-align--center"
+    class="home
+      height-min--100vh
+      display--flex
+      flex-justify--center
+      flex-align--center
+      text-align--center"
   >
     <intro></intro>
+    <scroll-down></scroll-down>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import Intro from '@/components/home/Intro.vue';
+import ScrollDown from '@/components/ScrollDown.vue';
 
 @Component({
   components: {
     Intro,
+    ScrollDown,
   },
 })
 export default class Home extends Vue {}
