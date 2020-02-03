@@ -1,5 +1,5 @@
 <template>
-  <div
+  <article
     class="home
       height-min--100vh
       display--flex
@@ -9,7 +9,7 @@
   >
     <intro></intro>
     <scroll-down></scroll-down>
-  </div>
+  </article>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -23,7 +23,8 @@ import ScrollDown from '@/components/ScrollDown.vue';
     ScrollDown,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+}
 </script>
 
 <style lang="scss">

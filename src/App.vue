@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <route-change></route-change>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-export default class App extends Vue {}
+import RouteChange from '@/components/RouteChange.vue';
+
+
+@Component({
+  components: {
+    RouteChange,
+  },
+})
+export default class App extends Vue {
+}
 </script>
 
 <style lang="scss"></style>
