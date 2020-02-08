@@ -1,5 +1,7 @@
 <template>
   <transition
+  name="fade-in-down"
+  mode="out-in"
   >
     <slot></slot>
   </transition>

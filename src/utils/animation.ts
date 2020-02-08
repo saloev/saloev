@@ -1,4 +1,4 @@
-import { TimelineMax, Elastic } from 'gsap';
+import { TimelineMax } from 'gsap';
 
 /**
  * Common function for animating
@@ -20,7 +20,7 @@ export default class Animation {
         opacity: show ? 1 : 1,
         delay,
         immediateRender: true,
-        ease: Elastic.easeInOut.config(1, 1),
+        ease: 'elastic.easeInOut(1, 1)',
       }, 0.77)
         .add(resolve);
     });

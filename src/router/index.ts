@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { Route } from 'vue-router';
 import routes from './routes';
+import store from '@/store/index';
 
 import Animation from '@/utils/animation';
 
@@ -24,17 +25,20 @@ const scrollToTop = () => {
   });
 };
 
-// const animateAppearence = (): void {
-//   const arr = [
-//     this.$refs.intro.$el,
-//     this.$refs.scroll.$el,
-//   ];
-//   Animation.animateArrayOfElements(arr);
-// }
+const animateLeavingRoute = (next: Function): void => {
+  store.dispatch('animation/animatePageLeave')
+    .then(() => {
+      next();
+    })
+    .catch((e: any) => {
+      console.error(e);
+    });
+};
 
-router.beforeEach((to: Route, from: Route, next: Function) => {
-  console.log(from);
-  next();
+router.beforeEach((to: Route, from: Route, next: Function): void => {
+  const domList: Array<Element> = store.getters['animation/domList'];
+  if (domList.length) return animateLeavingRoute(next);
+  return next();
 });
 
 router.afterEach((to: Route, from: Route) => {

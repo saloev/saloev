@@ -16,11 +16,15 @@
 /* eslint-disable class-methods-use-this */
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Action, Getter } from 'vuex-class';
+import { Animation as typeAnimation } from '@/types/store/types';
 
 import Animation from '@/utils/animation';
 
 import Intro from '@/components/home/Intro.vue';
 import ScrollDown from '@/components/ScrollDown.vue';
+
+const namespace: string = 'animation';
 
 @Component({
   components: {
@@ -29,15 +33,18 @@ import ScrollDown from '@/components/ScrollDown.vue';
   },
 })
 export default class Home extends Vue {
+  @Action('setDomList', { namespace }) setDomList: any;
+
   animateAppearence(): void {
     const intor = ((this.$refs.intro as Vue).$el as Element);
     const scroll = ((this.$refs.scroll as Vue).$el as Element);
-
-    const arr = [
+    const arr: Array<Element> = [
       intor,
       scroll,
     ];
     Animation.animateArrayOfElements(arr);
+
+    this.setDomList(arr);
   }
 
   mounted() {

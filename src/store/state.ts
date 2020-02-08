@@ -1,4 +1,4 @@
-import { RootState } from '@/types/vuex/types';
+import { RootState } from '@/types/store/types';
 
 const state: RootState = {
 };

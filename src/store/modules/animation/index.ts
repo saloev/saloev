@@ -4,7 +4,7 @@ import actions from './actions';
 import mutations from './mutations';
 import state from './state';
 
-import { RootState, Animation } from '@/types/vuex/types';
+import { RootState, Animation } from '@/types/store/types';
 
 
 const namespaced: boolean = true;
