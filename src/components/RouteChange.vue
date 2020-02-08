@@ -1,17 +1,7 @@
 <template>
-  <transition
-    @before-enter="beforeEnter"
-    @enter="enter"
-    @after-enter="afterEnter"
-    @enter-cancelled="enterCancelled"
-    @before-leave="beforeLeave"
-    @leave="leave"
-    @after-leave="afterLeave"
-    @leave-cancelled="leaveCancelled"
-    :css="false"
-  >
+  <animate-route>
     <router-view></router-view>
-  </transition>
+  </animate-route>
 </template>
 <script lang="ts">
 /* eslint-disable class-methods-use-this */
@@ -21,9 +11,13 @@ import {
 } from 'vue-property-decorator';
 import VueRouter, { Route } from 'vue-router';
 
-import debounce from '@/utils/debounce';
+import AnimateRoute from './AnimateRouteChange.vue';
 
-@Component
+@Component({
+  components: {
+    AnimateRoute,
+  },
+})
 export default class RouteChnage extends Vue {
   @Watch('$route', { immediate: true, deep: true })
   onUrlChange(newVal: any) {
@@ -31,7 +25,7 @@ export default class RouteChnage extends Vue {
   }
 
   // DATA
-  currentRoute: number = 0;
+  currentRouteIndex: number = 0;
 
   allRoutes: Array<{ name: string | undefined; path: string }> = [];
 
@@ -39,52 +33,7 @@ export default class RouteChnage extends Vue {
 
   lastScrolledPosition: number = 0;
 
-  // --------
-  // ПОЯВЛЕНИЕ
-  // --------
-
-  beforeEnter(el: any) {}
-
-  // коллбэк done не обязательно использовать, если
-  // анимация или переход также определены в CSS
-  enter(el: any, done: any) {
-    // ...
-    done();
-  }
-
-  afterEnter(el: any) {
-    // ...
-  }
-
-  enterCancelled(el: any) {
-    // ...
-  }
-
-  // --------
-  // ИСЧЕЗНОВЕНИЕ
-  // --------
-
-  beforeLeave(el: any) {
-    // ...
-  }
-
-  // коллбэк done не обязательно использовать, если
-  // анимация или переход также определены в CSS
-  leave(el: any, done: any) {
-    // ...
-    done();
-  }
-
-  afterLeave(el: any) {
-    // ...
-  }
-
-  // leaveCancelled доступна только для v-show
-  leaveCancelled(el: any) {
-    // ...
-  }
-
-  callFuncWithDelay(func: Function) {
+  callFuncWithDelay(func: Function): void {
     if (this.timeoutFunctions) return;
 
     this.timeoutFunctions = setTimeout(() => {
@@ -99,17 +48,17 @@ export default class RouteChnage extends Vue {
       down: Function;
     } = {
       down: () => {
-        this.currentRoute = this.currentRoute + 1 <= this.allRoutes.length - 1
-          ? this.currentRoute + 1
+        this.currentRouteIndex = this.currentRouteIndex + 1 <= this.allRoutes.length - 1
+          ? this.currentRouteIndex + 1
           : this.allRoutes.length - 1;
       },
       up: () => {
-        this.currentRoute = this.currentRoute - 1 >= 0 ? this.currentRoute - 1 : 0;
+        this.currentRouteIndex = this.currentRouteIndex - 1 >= 0 ? this.currentRouteIndex - 1 : 0;
       },
     };
 
     dispatchRouteDirection[direction]();
-    const { name, path } = this.allRoutes[this.currentRoute];
+    const { name, path } = this.allRoutes[this.currentRouteIndex];
 
     if (!name) {
       if (this.$route.path === path) return;
@@ -144,7 +93,10 @@ export default class RouteChnage extends Vue {
         ArrowDown: 'down',
       };
 
-      const dir: 'up' | 'down' | undefined = dispatchRouteDirection[e.key] || 'up';
+
+      if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+
+      const dir: 'up' | 'down' = dispatchRouteDirection[e.key] || 'up';
 
       if (!dir) return;
 
@@ -163,7 +115,8 @@ export default class RouteChnage extends Vue {
     this.callFuncWithDelay(func);
   }
 
-  saveRoutes() {
+  saveRoutes(): void {
+    // @ts-ignore
     const { options } = this.$router;
     options.routes.forEach((route: Route) => {
       this.allRoutes.push({
