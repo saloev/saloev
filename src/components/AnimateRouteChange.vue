@@ -1,6 +1,6 @@
 <template>
   <transition
-  name="fade-in-down"
+  name="fade"
   mode="out-in"
   >
     <slot></slot>
@@ -112,5 +112,12 @@ export default class RouteChnage extends Vue {
   animation-duration: .7s;
   animation-fill-mode: both;
   animation-name: fadeInDown;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 </style>

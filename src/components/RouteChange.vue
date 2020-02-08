@@ -118,7 +118,9 @@ export default class RouteChnage extends Vue {
   saveRoutes(): void {
     // @ts-ignore
     const { options } = this.$router;
-    options.routes.forEach((route: Route) => {
+    const [routes] = options.routes;
+    const { children } = routes;
+    children.forEach((route: Route) => {
       this.allRoutes.push({
         name: route.name,
         path: route.path,
