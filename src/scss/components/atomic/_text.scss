@@ -10,4 +10,9 @@
       text-shadow: var(--neon-yellow-text-shadow);
     }
   }
+  &-decoration {
+    &--none {
+      text-decoration: none;
+    }
+  }
 }

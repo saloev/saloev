@@ -3,8 +3,6 @@ import VueRouter, { Route } from 'vue-router';
 import routes from './routes';
 import store from '@/store/index';
 
-import Animation from '@/utils/animation';
-
 
 Vue.use(VueRouter);
 

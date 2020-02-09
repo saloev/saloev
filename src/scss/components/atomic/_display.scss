@@ -2,11 +2,18 @@
   &--flex {
     display: flex;
   }
+  &--block {
+    display: block;
+  }
 }
 
 .flex-justify {
   &--center {
     justify-content: center;
+  }
+
+  &--between {
+    justify-content: space-between;
   }
 }
 
