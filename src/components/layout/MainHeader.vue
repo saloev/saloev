@@ -1,41 +1,45 @@
 <template>
-  <nav
-    class="
+  <header>
+    <nav
+      class="
     main-nav
     position--fixed
     width--100
     padding--25
     "
-  >
-    <ul
-      class="
+    >
+      <ul
+        class="
         main-nav__list
         reset--list
         padding--0
         display--flex
         flex-justify--between
         "
-    >
-      <li
-        class="main-nav__item"
-        v-for="(item, index) in menuList"
-        :key="`menu-item-${index}`"
       >
-        <router-link
-          :to="item.path"
-          class="main-nav__link
+        <li
+          class="main-nav__item"
+          v-for="(item, index) in menuList"
+          :key="`menu-item-${index}`"
+        >
+          <router-link
+            :to="item.path"
+            class="main-nav__link
           position--relative
           display--block
           overflow--hidden
           text-decoration--none
           color--iris-blue
           "
-          data-link="To home page"
-          ><span class="main-nav__link-text">{{ item.name }}</span></router-link
-        >
-      </li>
-    </ul>
-  </nav>
+            data-link="To home page"
+            ><span class="main-nav__link-text">{{
+              item.name
+            }}</span></router-link
+          >
+        </li>
+      </ul>
+    </nav>
+  </header>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
@@ -94,7 +98,6 @@ export default class MainLayout extends Vue {
     &:hover,
     &:focus,
     &:active {
-
       &::after,
       &::before {
         transform: scale(1);

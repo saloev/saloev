@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <route-change></route-change>
+    <router-view></router-view>
   </div>
 </template>
 
