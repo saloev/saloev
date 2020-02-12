@@ -78,8 +78,6 @@ export default class MainLayout extends Vue {
 
       background: var(--color-gold);
 
-      transform: scale(0);
-
       transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
       will-change: transform;
@@ -88,11 +86,15 @@ export default class MainLayout extends Vue {
     &::before {
       right: 0;
       bottom: 0;
+
+      transform: translateX(-100%);
     }
 
     &::after {
       top: 0;
       left: 0;
+
+      transform: translateX(100%);
     }
 
     &:hover,
@@ -100,7 +102,7 @@ export default class MainLayout extends Vue {
     &:active {
       &::after,
       &::before {
-        transform: scale(1);
+        transform:  translateX(0);
       }
     }
   }

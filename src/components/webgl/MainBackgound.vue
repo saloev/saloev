@@ -19,14 +19,17 @@ import vs from './shaders/vertex.glsl';
 
 @Component
 export default class MainBackground extends Vue {
-  canvas: HTMLCanvasElement = ((this.$refs as any).canvas as HTMLCanvasElement);
+  canvas: HTMLCanvasElement | null = null;
 
   setCanvasSize() {
+    if (!this.canvas) return;
+
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
   }
 
   bindEvents() {
+    this.canvas = ((this.$refs as any).canvas as HTMLCanvasElement);
     window.addEventListener('resize', this.setCanvasSize);
   }
 
