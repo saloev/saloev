@@ -21,15 +21,24 @@ import vs from './shaders/vertex.glsl';
 export default class MainBackground extends Vue {
   canvas: HTMLCanvasElement | null = null;
 
+  resizeTimeoute: number | null = null;
+
   setCanvasSize() {
     if (!this.canvas) return;
 
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    if (this.resizeTimeoute) {
+      clearTimeout(this.resizeTimeoute);
+    }
+
+    this.resizeTimeoute = setTimeout(() => {
+      if (!this.canvas) return;
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+    }, 500);
   }
 
   bindEvents() {
-    this.canvas = ((this.$refs as any).canvas as HTMLCanvasElement);
+    this.canvas = (this.$refs as any).canvas as HTMLCanvasElement;
     window.addEventListener('resize', this.setCanvasSize);
   }
 
@@ -44,7 +53,7 @@ export default class MainBackground extends Vue {
     this.bindEvents();
   }
 
-  destroyed() {
+  beforeDestroy() {
     this.destroyEvents();
   }
 }

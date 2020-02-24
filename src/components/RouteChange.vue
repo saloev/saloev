@@ -34,11 +34,12 @@ export default class RouteChnage extends Vue {
   lastScrolledPosition: number = 0;
 
   callFuncWithDelay(func: Function): void {
-    if (this.timeoutFunctions) return;
+    if (this.timeoutFunctions) {
+      clearTimeout(this.timeoutFunctions);
+    }
 
     this.timeoutFunctions = setTimeout(() => {
       func();
-      this.timeoutFunctions = null;
     }, 500);
   }
 
@@ -148,7 +149,7 @@ export default class RouteChnage extends Vue {
     this.bindEvents();
   }
 
-  destroyed() {
+  beforeDestroy() {
     this.destroyEvents();
   }
 }
