@@ -11,11 +11,16 @@ import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 
+// LOAD IMAGES
+// @ts-ignore
+import HomeBgImage from '@/assets/home-bg.jpeg';
+
 // LOAD SHADERS
 // @ts-ignore
 import fs from './shaders/fragment.glsl';
 // @ts-ignore
 import vs from './shaders/vertex.glsl';
+
 
 @Component
 export default class MainBackground extends Vue {
@@ -26,6 +31,7 @@ export default class MainBackground extends Vue {
   }
 
   mounted() {
+    this.loadImages();
     this.bindEvents();
   }
 
@@ -40,6 +46,24 @@ export default class MainBackground extends Vue {
   showError(err: string | null): Error {
     if (err === null) throw Error('Empty error');
     throw Error(err);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  loadImages() {
+    const images: Array<string> = [HomeBgImage];
+    const imagesPromise: Array<any> = [];
+
+    images.forEach((src, index) => {
+      const img: HTMLImageElement = new Image();
+      img.src = src;
+      imagesPromise.push(new Promise((resolve) => {
+        img.onload = () => resolve(img);
+      }));
+    });
+
+    return Promise.all(imagesPromise).then((imgs: Array<HTMLImageElement>) => {
+      this.init(imgs);
+    }).catch(e => console.error(e));
   }
 
   compileShaderStatus(gl: WebGLRenderingContext, shader: WebGLShader) {
@@ -62,6 +86,8 @@ export default class MainBackground extends Vue {
       if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      canvas.style.width = `${window.innerWidth}px`; // set the display size.
+      canvas.style.height = `${window.innerHeight}px`;
     }, 500);
   }
 
@@ -69,7 +95,7 @@ export default class MainBackground extends Vue {
    * Init WebGL
    * @see https://www.youtube.com/watch?time_continue=202&v=_ZQOUQsw_YI&feature=emb_logo
    */
-  init(): void {
+  init(images: Array<HTMLImageElement>): void {
     this.setCanvasSize();
     const gl: WebGLRenderingContext | null = this.canvas.getContext('webgl');
     if (!gl) {
@@ -149,11 +175,27 @@ export default class MainBackground extends Vue {
     const positionLocation: number = gl.getAttribLocation(program, 'position');
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(positionLocation);
+
+    // Load images as texture
+    const texture: WebGLTexture | null = gl.createTexture();
+    if (!texture) {
+      this.showError("Can't create texture");
+      return;
+    }
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[0]);
+
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+
     gl.drawArrays(gl.TRIANGLES, 0, 6);
   }
 
   bindEvents() {
-    this.init();
     window.addEventListener('resize', this.setCanvasSize);
   }
 
