@@ -29,12 +29,6 @@ export default class App extends Vue {}
 .main-layout {
   background-position: center;
   background-size: cover;
-  background-image: url($assets+"/home-bg.jpeg"),
-    linear-gradient(
-      180deg,
-      rgba(8, 15, 26, 0.59) 0%,
-      rgba(17, 17, 46, 0.46) 100%
-    );
   background-blend-mode: multiply;
 }
 </style>
